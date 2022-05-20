@@ -1,0 +1,29 @@
+<html>
+<head>
+    <style>
+        {{ template "styles.css" }}
+
+        h1 {
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+<div class="mx-auto max-w-2xl">
+    <a class="font-semibold text-2xl hover:underline" href="/">Architectural Decision Records</a>
+    <form action="search" class="flex flex-row gap-2 my-4" method="get">
+        <input class="flex-1 px-2 py-1 border-2 rounded focus:ring-2" type="text" placeholder="Keyword" name="q"/>
+        <input class="flex-initial px-2 py-1 border rounded shadow-sm focus:ring-2 cursor-pointer" type="submit" value="Search"/>
+    </form>
+
+    {{ block "body" . }}{{ end }}
+
+    <footer class="text-sm text-gray-600 mt-8">
+        Architectural Decision Records (ADR)
+    </footer>
+</div>
+</body>
+</html>

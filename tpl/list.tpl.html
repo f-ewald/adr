@@ -1,0 +1,14 @@
+{{ template "base.tpl.html" . }}
+
+{{ define "body" }}
+    <div class="grid grid-cols-2 gap-4">
+        {{ range .Files }}
+        <div class="shadow rounded px-2 py-4">
+            <a href="/{{.Filename}}">
+                <span class="font-mono text-gray-600">{{ .Number }}</span> {{.Title}}
+                <p class="text-gray-600 text-sm">{{.Status}}</p>
+            </a>
+        </div>
+        {{ end }}
+    </div>
+{{ end }}

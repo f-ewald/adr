@@ -24,7 +24,7 @@ type AdrConfig struct {
 type Adr struct {
 	Number int
 	Title  string
-	Date   string
+	Date   time.Time
 	Status AdrStatus
 }
 
@@ -78,25 +78,10 @@ func initConfig(baseDir string) {
 }
 
 func initTemplate() {
-	body := []byte(`
-# {{.Number}}. {{.Title}}
-======
-Date: {{.Date}}
-
-## Status
-======
-{{.Status}}
-
-## Context
-======
-
-## Decision
-======
-
-## Consequences
-======
-
-`)
+	body, err := fs.ReadFile("tpl/doc.tpl.yaml")
+	if err != nil {
+		panic(err)
+	}
 
 	err = ioutil.WriteFile(adrTemplateFilePath, body, 0644)
 	if err != nil {
@@ -135,7 +120,7 @@ func getConfig() AdrConfig {
 func newAdr(config AdrConfig, adrName []string) {
 	adr := Adr{
 		Title:  strings.Join(adrName, " "),
-		Date:   time.Now().Format("02-01-2006 15:04:05"),
+		Date:   time.Now().UTC().Round(time.Minute),
 		Number: config.CurrentAdr,
 		Status: PROPOSED,
 	}
@@ -143,7 +128,7 @@ func newAdr(config AdrConfig, adrName []string) {
 	if err != nil {
 		panic(err)
 	}
-	adrFileName := strconv.Itoa(adr.Number) + "-" + strings.Join(strings.Split(strings.Trim(adr.Title, "\n \t"), " "), "-") + ".md"
+	adrFileName := strconv.Itoa(adr.Number) + "-" + strings.Join(strings.Split(strings.Trim(adr.Title, "\n \t"), " "), "-") + ".yaml"
 	adrFullPath := filepath.Join(config.BaseDir, adrFileName)
 	f, err := os.Create(adrFullPath)
 	if err != nil {

@@ -1,0 +1,8 @@
+{{ template "base.tpl.html" . }}
+
+{{ define "body" }}
+    <h1 class="font-semibold"><span class="font-mono text-gray-600">{{ .Doc.Number }}</span> {{ .Doc.Title }}</h1>
+    <p>{{ .Doc.Date.Format "2006-01-02" }} &bull; {{ .Doc.Status }}</p>
+
+    {{ .Body }}
+{{ end }}

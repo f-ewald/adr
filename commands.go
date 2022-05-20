@@ -39,5 +39,14 @@ func setCommands(app *cli.App) {
 				return nil
 			},
 		},
+		{
+			Name:    "serve",
+			Aliases: []string{"s"},
+			Usage:   "Starts a webserver that serves the ADR",
+			Action: func(c *cli.Context) error {
+				serve()
+				return nil
+			},
+		},
 	}
 }
